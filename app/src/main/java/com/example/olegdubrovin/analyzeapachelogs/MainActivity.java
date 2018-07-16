@@ -1,10 +1,10 @@
 package com.example.olegdubrovin.analyzeapachelogs;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -14,6 +14,7 @@ import de.blox.treeview.TreeNode;
 import de.blox.treeview.TreeView;
 
 import static android.support.design.widget.Snackbar.LENGTH_SHORT;
+import static com.example.olegdubrovin.analyzeapachelogs.common.UtilsKt.getRootNode;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(treeView, "Clicked on " + mCurrentNode.getData().toString(), LENGTH_SHORT).show();
             }
         });
+
+
+        getRootNode("access.log");
     }
 
     private class ViewHolder {
