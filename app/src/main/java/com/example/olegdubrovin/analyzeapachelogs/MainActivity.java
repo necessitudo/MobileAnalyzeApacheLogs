@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // example tree
-        mCurrentNode = new TreeNode(getNodeText());
+        /*mCurrentNode = new TreeNode(getNodeText());
         mCurrentNode.addChild(new TreeNode(getNodeText()));
         final TreeNode child3 = new TreeNode(getNodeText());
         child3.addChild(new TreeNode(getNodeText()));
@@ -67,19 +67,21 @@ public class MainActivity extends AppCompatActivity {
         final TreeNode child4 = new TreeNode(getNodeText());
         child4.addChild(new TreeNode(getNodeText()));
         child4.addChild(new TreeNode(getNodeText()));
-        mCurrentNode.addChild(child4);
+        mCurrentNode.addChild(child4);*/
+
+        TreeNode mCurrentNode = getRootNode("access.log");
 
         adapter.setRootNode(mCurrentNode);
         treeView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCurrentNode = adapter.getNode(position);
-                Snackbar.make(treeView, "Clicked on " + mCurrentNode.getData().toString(), LENGTH_SHORT).show();
+                //mCurrentNode = adapter.getNode(position);
+                //Snackbar.make(treeView, "Clicked on " + mCurrentNode.getData().toString(), LENGTH_SHORT).show();
             }
         });
 
 
-        getRootNode("access.log");
+
     }
 
     private class ViewHolder {

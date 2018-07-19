@@ -5,12 +5,8 @@ import de.blox.treeview.TreeNode
 import java.nio.charset.StandardCharsets
 import java.nio.file.*
 import java.util.*
-import android.R.attr.path
 import android.os.Environment
 import com.example.olegdubrovin.analyzeapachelogs.data.LineTree
-import java.io.File
-import java.nio.file.Files.exists
-
 
 
 fun getRootNode(nameFile:String):TreeNode {
@@ -30,11 +26,10 @@ fun getRootNode(nameFile:String):TreeNode {
 
     }
 
-
     val lineRoot =  LineTree("Overal", 0)
-    val rootNode = TreeNode(lineRoot)
+    val rootNode = TreeNode(lineRoot.toString())
 
-    //for (i in treeData.keys) treeScanDown(i!!, treeData, rootNode)
+    for (i in treeData.keys) treeScanDown(i!!, treeData, rootNode)
 
     return rootNode
 
@@ -64,7 +59,8 @@ fun recoverMainBranch(contentStr: String?, treeData: HashMap<String?, HashMap<St
         if (collectionContent.size>=6) {
 
             var previousBranch = HashMap<String, Any>()
-            val amountIteration = collectionContent.size-2
+            //val amountIteration = collectionContent.size-2
+            val amountIteration = collectionContent.size-4
 
             for (n in 3..amountIteration) {
 
@@ -108,6 +104,38 @@ fun recoverMainBranch(contentStr: String?, treeData: HashMap<String?, HashMap<St
             }
         }
     }
+}
 
+fun treeScanDown(key: Any, treeData: Map<*, *>, rootNode: TreeNode){
+
+    val currentValue = treeData.get(key)
+
+    val line = LineTree(if (key is String ) key else key.toString(), if (currentValue is Int) currentValue else 0)
+    val lineNode = TreeNode(line.toString())
+    rootNode.addChild(lineNode)
+
+    //На каждой итерации возвращаемся вверх и пересчитываем итоги
+
+    //Спустимся вниз в кроличью нору
+
+
+    if(currentValue is Map<*,*>) {
+        for (i in currentValue.keys) treeScanDown(i!!, currentValue, lineNode)
+    }
+
+    //if Int to going rescan up!
+    if (currentValue is Int) {
+        treeScanUp(currentValue, rootNode)
+    }
+
+}
+
+fun treeScanUp(addValue: Int, rootNode: TreeNode){
+
+    //rootNode.data value.amount += addValue
+
+    //rootNode.value.amount += addValue
+
+    if (rootNode.parent!=null) treeScanUp(addValue, rootNode.parent)
 }
 
